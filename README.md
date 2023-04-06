@@ -400,4 +400,18 @@ document.getElementById("asc-gen3843").firstChild.click()
 
 Problemen:
 1) definieer "indien document geladen is" (wacht tot dat je document.get iets vindt?)
+mogelijke oplossing?
+``` javascript
+window.addEventListener('load', function () {
+  alert("It's loaded!")
+})
+
+```
 2) Het is gehardcode wat je moet vinden.
+mogelijke oplossing?
+A) werk met jquery?
+B) gebruik document.querySelectorAll()
+-> lukt mij niet  (vindt Plugins niet)
+
+
+docker cp cb257b5b7758dfbdba8815ecb9e87862df63a77d7039999217d39e9912a704f0:/var/www/onlyoffice/documentserver/sdkjs-plugins/cellColor ./cellColor

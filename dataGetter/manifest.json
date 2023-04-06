@@ -1,0 +1,10 @@
+{
+    "name": "Data Getter Plugin",
+    "version": "1.0.0",
+    "manifest_version": 2,
+    "description": "A plugin to get data from the spreadsheet",
+    "author": "Your Name"
+
+
+  }
+  

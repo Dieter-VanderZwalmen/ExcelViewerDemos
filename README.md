@@ -108,15 +108,15 @@ Je kan ook met mounts werken. Deze werken behalve voor de plugins voor onbekende
 
 
 Ik gebruik Docker desktop.
-Hierin kon ik zien dat er een nieuwe container was.
+Hierin heb ik alles gedaan, files bekijken, terminal gebruiken logs bekijken, ...
 
 Je kan nu normaal gezien naar 
 
 http://localhost/ surfen.
 
-Voer de 2 commandos uit onder "Testing before integration" in je terminal (van je eigen computer niet je docker container).
+Voer de 2 commandos uit onder "Testing before integration" in je terminal (van je eigen computer niet je docker container). Dit moet je elke keer doen al je je docker container herstart.
 
-Hierna kan je op "Go to test example" duwen.
+Hierna kan je op "Go to test example" duwen. (Die grote oranje knop)
 
 Hierin staat alles omtrent uploaden, downloaden, bekijken en bewerken van documenten.
 
@@ -132,7 +132,7 @@ In essentie moet je het volgende doen:
 
 Ga naar /var/www/onlyoffice/documentserver/sdkjs-plugins/
 
-Maak hier een folder aan en 3 files ().
+Maak hier een folder aan en 3 files.
 - config.json
 - index.html
 - plugin.js
@@ -141,8 +141,13 @@ Maak hier een folder aan en 3 files ().
 "Uitleg" over hoe je een plugin moet maken:
 https://api.onlyoffice.com/plugin/code
 
+Uitleg over wat je in de config kan/moet zetten:
+https://api.onlyoffice.com/plugin/config
+
 Opensource plugin voorbeelden: 
 https://api.onlyoffice.com/plugin/example/
+
+Ik zou vooral inspiratie nemen uit de voorbeelden.
 
 
 een plugin dat niets zou doen zou denk ik er als volgt moeten uitzien:
@@ -190,13 +195,6 @@ In commentaar staat welke scripts voor wat dienen. (hier ben ik niet 100% zeker 
 	</head>
 ```
 
-
-Wat er exact in de config.json moet staan snap ik zelf niet.
-Maar wat ik wel weet is dat je hier data kan meegeven zoals wat is de naam wat is het icoontje etc etc.
-
-
-
-
 Hoe heb ik ervoor gezorgd dat je de aangeduide cells kan toevoegen aan een map:
 Ik heb de translate tool helemaal ge copy paste en het volgende toegevoegd.
 
@@ -211,7 +209,7 @@ in de index.html voeg ik een nieuwe knop toe.
 ```
 
 
-in de langTool.js voeg je boven " $('#clear').click(function() { " het volgende toe.
+in de langTool.js voeg je boven `$('#clear').click(function() {` het volgende toe.
 
 ``` javascript
 		$('#addToCategory').click(function () {
@@ -236,15 +234,16 @@ Normaal gezien zit in txt al de gewenste waarden maar dit is "veiliger" denk ik.
 
 Hoe haalt de translatetool informatie uit de geselecteerde cellen?
 
-Geen idee.
-Indien je cellen selecteerd en een debug bolletje zet op de lijn 
+In de config staan 2 veldjes 
+initData en initDataType. lees documentatie.
+https://api.onlyoffice.com/plugin/config#initData
+
+
+Deze informatie van initData en initDataType gaat naar.
 ``` javascript 
 window.Asc.plugin.init = function(text)	{
 ```
 
-Zal je zien dat de functie wordt opgeroepen met text als parameter waar alle waarden inzitten. Hoe dit gebeurt begrijp ik niet.
-
-Daarom heb ik gewoon heel de translatetool plugin ge copypaste en aangepast.
 <hr>
 
 ## hoe krijg je dit in vue?
@@ -304,8 +303,82 @@ maar je kan beide url links gebruiken die gegeven staan in het voorbeeld.
 
 en indien je deze app opendoet op verschillende tabs kan je wel zien dat er updates zijn na een refresh.
 
+De echte vraag is is het nodig om dit in vue te steken? Hoe mogelijk is het om gewoon de gegeven site te gebruiken?
+Mijn vraag is dan, mag iedereen alle documenten zien of zijn er bepaalde restricties die ervoor zorgen dat je vue nodig hebt?
 
-## Conclusie / mijn mening
 
-De documentatie is zo slecht dat je er vrijwel niets mee bent.
-Je kan gelukkig wel alle code bekijken aangezien deze opensource is of lokaal draait. Zo kan je begrijpen hoe alles werkt.
+### Hoe verkrijg je geselecteerde waardes uit je word/excel
+
+(Herhaling)
+In je config.json moeten de volgende attributen staan.
+```
+"initDataType": "text",
+"initData": "",
+```
+
+Deze zorgen er voor dat de volgende code de parameter "text" krijgt.
+plugin.js:
+
+```javascript
+(function (window, undefined) {
+    window.Asc.plugin.init = function (text) {
+        console.log("text",text);
+    };
+    window.Asc.plugin.button = function (id) {
+    };
+})(window, undefined);
+```
+Je plugin.js moet niet meer bevatten dan dit.
+
+
+### Hoe zet je bepaalde cellen in een kleur
+
+
+1) in een macro
+Zet B3 in een kleur.
+``` javascript
+(function()
+{
+    Api.GetActiveSheet().GetRange("B3").SetFillColor(Api.CreateColorFromRGB(0, 0, 250));
+
+    
+})();
+
+```
+
+De get range gaat van point A naar B. Je kan niet GetRange("B3","B4","B5").
+Je kan wel GetRange("B3","B5").
+
+2) Plugin die zowel een comment zet als de kleur veranderd.
+Neem het volgende over: https://github.com/ONLYOFFICE/sdkjs-plugins/tree/master/example_add_comment_in_cell
+
+Voeg de lijn met commentaar toe.
+```Javascript
+window.Asc.plugin.callCommand(function() {
+				var oWorksheet = Api.GetActiveSheet();
+				var ActiveCell = oWorksheet.ActiveCell;
+				ActiveCell.AddComment(Asc.scope.textComment); 
+				ActiveCell.SetFillColor(Api.CreateColorFromRGB(0, 0, 250)); //DEZE LIJN toevoegen.
+			}, true);
+
+```
+
+Zoals je ziet is het in essentie hetzelfde tussen een plugin en macro.
+
+### Macros
+
+Handig snel maar document specifiek.
+Vooral goed om je code mee uit te testen.
+
+
+### Mogelijke fouten, moeilijkheden
+
+Indien er een fout zit in je plugin (ookal krijg je geen error messages) gaat je plugin niet getoond worden.
+
+Indien er "grote" fouten in je plugin zit die alles breken zal het tabje "plugin" verdwijnen.
+
+Sommige instanties van servers werken gewoon niet. (Geen idee waarom)
+
+Docker geeft je niet altijd de meest recente versie dus je moet echt checken of je up-to-date informatie krijgt.
+
+

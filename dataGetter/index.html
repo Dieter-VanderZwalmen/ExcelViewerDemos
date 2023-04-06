@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Names Plugin</title>
-  </head>
-  <body>
-    <h1>Names Plugin</h1>
-    <div id="names-plugin"></div>
-    <div id="categories"></div>
+<html lang="en">
+        <head>
+                <meta charset="UTF-8">
+                <title>customPlugin</title>
+                <!--<script src="plugin.js"></script>-->
 
-    <script src="https://cdn.onlyoffice.com/sdk/v1/onlyoffice.js"></script>
-    <script src="plugins.js"></script>
-    <script src="vendor/jQuery-2.2.2-min/jquery-v2.2.2-min.js"></script>
-		<script src="vendor/select2-4.0.13/js/select2.js"></script>
-		<script type="text/javascript" src="https://onlyoffice.github.io/sdkjs-plugins/v1/plugins.js"></script>
-		<script type="text/javascript" src="https://onlyoffice.github.io/sdkjs-plugins/v1/plugins-ui.js"></script>
-  </body>
+        </head>
+        <body class='body' style="margin: 0; display: flex; flex-direction: column;">
+        </div>
+                <div id="hide_show" style="margin: 12px 14px 4px 0px;">
+                  <label id="clear" class="unselectable i18n" style="float: right; border-bottom: var(--scaled-one-pixel, 1px) dotted rgba(255, 255, 255, 0.8); cursor: pointer;">Clear text</label>
+                </div>
+                <div id="enter_container" class="form-control" style="cursor: text; position: relative; margin: 0px 12px 0px 12px; min-height: 100px; max-height: 45%; height: fit-content;">
+                        <div id="textarea" contenteditable="true" data-text="Select the text to check in the document or enter it manually" style="white-space: pre-wrap !important; min-width: 95%; max-width: 95%; height: fit-content; padding: 0px 15px 5px 3px; outline: none; white-space: normal; float: left; word-wrap: break-word;" ></div>
+                </div>
+                <div id="button_wrapper">
+                        <div onсlick="" id="addToCategory" class="noselect btn-text-default i18n" style="height: auto; min-height: 20px;">Add to category</div>
+                        <div onсlick="" id="replace" class="noselect btn-text-default i18n" style="height: fit-content; min-height: 20px;">Insert to document</div>
+                </div>
+        </body>
 </html>

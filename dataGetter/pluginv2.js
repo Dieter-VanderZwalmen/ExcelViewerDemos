@@ -1,11 +1,7 @@
-(function(window, undefined){
-
-    let txt = "";
-    window.Asc.plugin.init = function(text)	{   
-		txt = text;
-        }
-    window.Asc.plugin.button = function(id)
-    {
-        this.executeCommand("close", "");
+(function (window, undefined) {
+    window.Asc.plugin.init = function (text) {
+        console.log("text",text);
+    };
+    window.Asc.plugin.button = function (id) {
     };
 })(window, undefined);

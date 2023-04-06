@@ -1,22 +1,20 @@
 {
-  "name": "Names Plugin",
-  "version": "1.0.0",
-  "description": "Plugin for adding names to categories in OnlyOffice",
-  "homepage": "https://your-plugin-website.com",
-  "authors": [
-    {
-      "name": "Your Name",
-      "email": "your-email@example.com"
-    }
-  ],
-  "api": {
-    "version": "1.0",
-    "plugins": [
-      {
-        "name": "names-plugin",
-        "class": "NamesPlugin",
-        "path": "/names-plugin"
-      }
-    ]
-  }
+    "name"       : "eigenPlugin",
+    "guid"       : "asc.{0616AE85-5DBE-4B6B-A0A9-420C4F1503AD}",
+            "description"         : "eigen plugin",
+            "url"                 : "index.html",
+
+            "icons"               : ["resources/img/icon.png", "resources/img/icon@2x.png"],
+            "isViewer"            : true,
+            "EditorsSupport"      : ["word","cell"],
+
+            "isVisual"            : true,
+            "isModal"             : true,
+
+            "initDataType"        : "text",
+            "initData"            : "",
+
+        "initOnSelectionChanged": true
+      
+    
 }

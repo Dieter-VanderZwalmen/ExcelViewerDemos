@@ -382,3 +382,22 @@ Sommige instanties van servers werken gewoon niet. (Geen idee waarom)
 Docker geeft je niet altijd de meest recente versie dus je moet echt checken of je up-to-date informatie krijgt.
 
 
+### Het default opzetten van de plugin.
+
+Ik denk niet dat er een manier is om het proper te doen.
+Aangezien de plugins enkel worden geladen nadat je er op hebt geduwt.
+
+Zie wel het volgende:
+"plugin isSystem" veld:
+https://api.onlyoffice.com/plugin/types
+
+
+Wat misschien wel kan werken is:
+
+Indien document geladen is.
+document.querySelector("#toolbar > section > section.box-tabs > section > ul > li:nth-child(11) > a").click()
+document.getElementById("asc-gen3843").firstChild.click()
+
+Problemen:
+1) definieer "indien document geladen is" (wacht tot dat je document.get iets vindt?)
+2) Het is gehardcode wat je moet vinden.
